@@ -12,3 +12,8 @@ let PORT = process.env.PORT || 8080;
 // setting up express app for data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// setting up listener to start the server
+app.listen(PORT, function () {
+	console.log('App is listening on PORT: ' + PORT);
+});
