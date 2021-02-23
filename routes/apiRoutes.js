@@ -43,7 +43,7 @@ module.exports = function (app) {
 
 	// enabling delete functionality for notes
 	app.delete('/api/notes/:id', (req, res) => {
-		let noteFile = path.join(__dirname, '/db/db.json');
+		let noteFile = path.join(__dirname, '../db/db.json');
 
 		let target = req.params.id;
 
@@ -59,7 +59,7 @@ module.exports = function (app) {
 			fs.writeFile(noteFile, JSON.stringify(nonTargets), (err) =>
 				err ? console.error(err) : console.log('Note deleted!')
 			);
-			res.json(notes);
+			res.json(currentNotes);
 		});
 	});
 };
