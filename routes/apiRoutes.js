@@ -40,4 +40,26 @@ module.exports = function (app) {
 			res.json(currentNotes);
 		});
 	});
+
+	// enabling delete functionality for notes
+	app.delete('/api/notes/:id', (req, res) => {
+		let noteFile = path.join(__dirname, '/db/db.json');
+
+		let target = req.params.id;
+
+		fs.readFile(noteFile, 'utf8', (error, data) => {
+			if (error) {
+				console.error(error);
+			}
+
+			let currentNotes = JSON.parse(data);
+
+			let nonTargets = notes.filter((el) => el.id != target);
+
+			fs.writeFile(noteFile, JSON.stringify(nonTargets), (err) =>
+				err ? console.error(err) : console.log('Note deleted!')
+			);
+			res.json(notes);
+		});
+	});
 };
