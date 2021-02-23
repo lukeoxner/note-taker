@@ -7,7 +7,7 @@ const fs = require('fs');
 const app = express();
 
 // setting port for heroku deployment, or localhost
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8090;
 
 // setting up express app for data parsing
 app.use(express.urlencoded({ extended: true }));

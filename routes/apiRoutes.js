@@ -27,6 +27,12 @@ module.exports = function (app) {
 
 			currentNotes.push(newNote);
 
+			currentNotes.forEach(function (note, i) {
+				console.log(`i = ${i}`);
+				note.id = 1 + i;
+				console.log(`id = ${note.id}`);
+			});
+
 			fs.writeFile(noteFile, JSON.stringify(currentNotes), (err) =>
 				err ? console.error(err) : console.log('Note added!')
 			);
