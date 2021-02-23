@@ -54,7 +54,7 @@ module.exports = function (app) {
 
 			let currentNotes = JSON.parse(data);
 
-			let nonTargets = notes.filter((el) => el.id != target);
+			let nonTargets = currentNotes.filter((el) => el.id != target);
 
 			fs.writeFile(noteFile, JSON.stringify(nonTargets), (err) =>
 				err ? console.error(err) : console.log('Note deleted!')
