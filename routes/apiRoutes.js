@@ -15,8 +15,8 @@ module.exports = function (app) {
 	});
 
 	// handling post requests for /api/notes
-	app.post('/api/notes', function (req, res) {
-		let newNote = req.body;
+	app.post('/api/notes', (req, res) => {
+		const newNote = req.body;
 		console.log(newNote);
 		let noteFile = path.join(__dirname, '../db/db.json');
 		fs.readFile(noteFile, 'utf8', (error, data) => {
@@ -25,14 +25,15 @@ module.exports = function (app) {
 			}
 			let currentNotes = JSON.parse(data);
 
+			// adding our new note to the current notes
 			currentNotes.push(newNote);
 
+			// generating id for each note to be used in note delete functionality
 			currentNotes.forEach(function (note, i) {
-				console.log(`i = ${i}`);
 				note.id = 1 + i;
-				console.log(`id = ${note.id}`);
 			});
 
+			// saving the notes with the new one added to the JSON file
 			fs.writeFile(noteFile, JSON.stringify(currentNotes), (err) =>
 				err ? console.error(err) : console.log('Note added!')
 			);

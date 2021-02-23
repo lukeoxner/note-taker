@@ -15,9 +15,9 @@ app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/db'));
 
-// link to routes files
-require('./routes/htmlRoutes')(app);
+// link to routes files (FYI the order matters...took me 2 hours to figure that out, lol)
 require('./routes/apiRoutes')(app);
+require('./routes/htmlRoutes')(app);
 
 // setting up listener to start the server
 app.listen(PORT, function () {
