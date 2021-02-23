@@ -42,13 +42,13 @@ const saveNote = (note) =>
 		body: JSON.stringify(note),
 	});
 
-// const deleteNote = (id) =>
-//   fetch(`/api/notes/${id}`, {
-//     method: 'DELETE',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
+const deleteNote = (id) =>
+	fetch(`/api/notes/${id}`, {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	});
 
 const renderActiveNote = () => {
 	hide(saveNoteBtn);
@@ -59,6 +59,8 @@ const renderActiveNote = () => {
 		noteTitle.value = activeNote.title;
 		noteText.value = activeNote.text;
 	} else {
+		noteTitle.removeAttribute('readonly');
+		noteText.removeAttribute('readonly');
 		noteTitle.value = '';
 		noteText.value = '';
 	}
@@ -76,22 +78,22 @@ const handleNoteSave = () => {
 };
 
 // Delete the clicked note
-// const handleNoteDelete = (e) => {
-//   // prevents the click listener for the list from being called when the button inside of it is clicked
-//   e.stopPropagation();
+const handleNoteDelete = (e) => {
+	// prevents the click listener for the list from being called when the button inside of it is clicked
+	e.stopPropagation();
 
-//   const note = e.target;
-//   const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+	const note = e.target;
+	const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
 
-//   if (activeNote.id === noteId) {
-//     activeNote = {};
-//   }
+	if (activeNote.id === noteId) {
+		activeNote = {};
+	}
 
-//   deleteNote(noteId).then(() => {
-//     getAndRenderNotes();
-//     renderActiveNote();
-//   });
-// };
+	deleteNote(noteId).then(() => {
+		getAndRenderNotes();
+		renderActiveNote();
+	});
+};
 
 // Sets the activeNote and displays it
 const handleNoteView = (e) => {
@@ -134,19 +136,19 @@ const renderNoteList = async (notes) => {
 
 		liEl.append(spanEl);
 
-		// if (delBtn) {
-		//   const delBtnEl = document.createElement('i');
-		//   delBtnEl.classList.add(
-		//     'fas',
-		//     'fa-trash-alt',
-		//     'float-right',
-		//     'text-danger',
-		//     'delete-note'
-		//   );
-		//   delBtnEl.addEventListener('click', handleNoteDelete);
+		if (delBtn) {
+			const delBtnEl = document.createElement('i');
+			delBtnEl.classList.add(
+				'fas',
+				'fa-trash-alt',
+				'float-right',
+				'text-danger',
+				'delete-note'
+			);
+			delBtnEl.addEventListener('click', handleNoteDelete);
 
-		//   liEl.append(delBtnEl);
-		// }
+			liEl.append(delBtnEl);
+		}
 
 		return liEl;
 	};
